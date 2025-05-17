@@ -142,7 +142,6 @@ class AssemblerHack():
         self.parser.reset()
         self.second_pass()
         self.write_to_file(filename)
-        print(self.symbol_table.symbol_table)
 
     def first_pass(self):
         line_counter = 0
