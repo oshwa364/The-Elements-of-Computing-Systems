@@ -1,0 +1,7 @@
+*.vm
+*.asm
+__pycache__/
+FibonacciElement/
+NestedCall/
+StaticsTest/
+SimpleFunction/
