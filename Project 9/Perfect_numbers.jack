@@ -1,0 +1,41 @@
+class Perfect_numbers {
+    function void run() {
+        var int amount;
+        var int i, j, mod, sum;
+        var int ceil;
+
+        do Output.printString("This program searches for perfect numbers.");
+        do Output.println();
+        let amount = Keyboard.readInt("How many numbers do you want to check? ");
+        let amount = amount + 2;
+
+        let i = 4;
+        while (i < amount) {
+            let sum = i / 2;
+            let j = 1;
+            if (i > 29) { let ceil = (i / 2) - Math.sqrt(i); }
+            else { let ceil = i / 2; }
+            
+            while (j < ceil) {
+                let mod = Perfect_numbers.get_mod(i, j);
+                if (mod = 0) {
+                    let sum = sum + j;
+                }
+                let j = j + 1;
+            }
+            if (sum = i) {
+                do Output.printInt(sum);
+                do Output.printString(" is a perfect number!");
+                do Output.println();
+            }
+            let i = i + 2;
+        }
+        return;
+    }
+
+    function int get_mod(int numerator, int denominator) {
+        var int mod;
+        let mod = numerator - ((numerator / denominator) * denominator);
+        return mod;
+    }
+}
