@@ -1,0 +1,392 @@
+function Memory.init 0
+    push constant 0
+    pop static 0
+    push constant 2048
+    pop static 2
+    push static 2
+    pop static 1
+    push constant 0
+    push static 1
+    add
+    push constant 0
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push constant 1
+    push static 1
+    add
+    push constant 14334
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push constant 0
+    pop static 3
+    push constant 0
+    return
+function Memory.peek 0
+    push argument 0
+    push static 0
+    add
+    pop pointer 1
+    push that 0
+    return
+function Memory.poke 0
+    push argument 0
+    push static 0
+    add
+    push argument 1
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push constant 0
+    return
+function Memory.alloc 5
+    push static 1
+    pop local 2
+    push constant 0
+    pop local 3
+label Memory_0
+    push local 2
+    push constant 0
+    eq
+    not
+    not
+    if-goto Memory_1
+    push constant 1
+    push local 2
+    add
+    pop pointer 1
+    push that 0
+    pop local 4
+    push constant 0
+    push local 2
+    add
+    pop pointer 1
+    push that 0
+    pop local 1
+    push local 4
+    push argument 0
+    push constant 2
+    add
+    gt
+    not
+    if-goto Memory_3
+    push constant 1
+    push local 2
+    add
+    push argument 0
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push argument 0
+    push constant 2
+    add
+    push local 2
+    add
+    push local 1
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push argument 0
+    push constant 3
+    add
+    push local 2
+    add
+    push local 4
+    push argument 0
+    sub
+    push constant 2
+    sub
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push local 3
+    push constant 0
+    eq
+    not
+    if-goto Memory_5
+    push local 2
+    push argument 0
+    add
+    push constant 2
+    add
+    pop static 1
+    goto Memory_4
+label Memory_5
+    push local 3
+    push static 0
+    add
+    push local 2
+    push argument 0
+    add
+    push constant 2
+    add
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+label Memory_4
+    push local 2
+    push constant 2
+    add
+    return
+    goto Memory_2
+label Memory_3
+label Memory_2
+    push local 4
+    push argument 0
+    push constant 2
+    add
+    eq
+    not
+    if-goto Memory_7
+    push local 3
+    push constant 0
+    eq
+    not
+    if-goto Memory_9
+    push local 1
+    pop static 1
+    goto Memory_8
+label Memory_9
+    push local 3
+    push static 0
+    add
+    push local 1
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+label Memory_8
+    push local 2
+    push constant 2
+    add
+    return
+    goto Memory_6
+label Memory_7
+label Memory_6
+    push local 2
+    pop local 3
+    push local 1
+    pop local 2
+    goto Memory_0
+label Memory_1
+    push static 3
+    not
+    not
+    if-goto Memory_11
+    call Memory.deFrag 0
+    pop temp 0
+    push constant 1
+    neg
+    pop static 3
+    push argument 0
+    call Memory.alloc 1
+    pop local 2
+    push local 2
+    return
+    goto Memory_10
+label Memory_11
+label Memory_10
+    push constant 0
+    return
+function Memory.deAlloc 2
+    push argument 0
+    push constant 2
+    sub
+    pop local 0
+    push constant 1
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    pop local 1
+    push constant 0
+    push local 0
+    add
+    push static 1
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push local 0
+    pop static 1
+    push constant 0
+    pop static 3
+    push constant 0
+    return
+function Memory.deFrag 9
+    push constant 0
+    pop local 0
+    push static 1
+    pop local 1
+label Memory_12
+    push local 1
+    push constant 0
+    eq
+    not
+    not
+    if-goto Memory_13
+    push constant 0
+    push local 1
+    add
+    pop pointer 1
+    push that 0
+    pop local 2
+    push constant 0
+    pop local 5
+    push local 0
+    pop local 4
+label Memory_14
+    push local 4
+    push constant 0
+    eq
+    not
+    push local 4
+    push local 1
+    lt
+    and
+    not
+    if-goto Memory_15
+    push local 4
+    pop local 5
+    push constant 0
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    pop local 4
+    goto Memory_14
+label Memory_15
+    push local 5
+    push constant 0
+    eq
+    not
+    if-goto Memory_17
+    push constant 0
+    push local 1
+    add
+    push local 0
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push local 1
+    pop local 0
+    goto Memory_16
+label Memory_17
+    push constant 0
+    push local 5
+    add
+    push local 1
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push constant 0
+    push local 1
+    add
+    push local 4
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+label Memory_16
+    push local 2
+    pop local 1
+    goto Memory_12
+label Memory_13
+    push local 0
+    pop static 1
+    push static 1
+    pop local 1
+label Memory_18
+    push local 1
+    push constant 0
+    eq
+    not
+    not
+    if-goto Memory_19
+    push constant 0
+    push local 1
+    add
+    pop pointer 1
+    push that 0
+    pop local 2
+    push local 2
+    push constant 0
+    eq
+    not
+    not
+    if-goto Memory_21
+    push constant 1
+    push local 1
+    add
+    pop pointer 1
+    push that 0
+    pop local 7
+    push local 1
+    push local 7
+    add
+    push constant 2
+    add
+    pop local 6
+    push local 6
+    push local 2
+    eq
+    not
+    if-goto Memory_23
+    push constant 1
+    push local 2
+    add
+    pop pointer 1
+    push that 0
+    pop local 8
+    push local 7
+    push local 8
+    add
+    push constant 2
+    add
+    pop local 7
+    push constant 1
+    push local 1
+    add
+    push local 7
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push local 2
+    push static 0
+    add
+    pop pointer 1
+    push that 0
+    pop local 2
+    push constant 0
+    push local 1
+    add
+    push local 2
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    goto Memory_22
+label Memory_23
+    push local 2
+    pop local 1
+label Memory_22
+    goto Memory_20
+label Memory_21
+    push local 2
+    pop local 1
+label Memory_20
+    goto Memory_18
+label Memory_19
+    push constant 0
+    return

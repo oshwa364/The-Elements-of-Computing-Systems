@@ -1,0 +1,141 @@
+/**
+ * This library provides two services: direct access to the computer's main
+ * memory (RAM), and allocation and recycling of memory blocks. The Hack RAM
+ * consists of 32,768 words, each holding a 16-bit binary number.
+ */ 
+class Memory {
+
+    static Array memory, freeList, heapBase;
+    static boolean deFragFlag;
+
+    /** Initializes the class. */
+    function void init() {
+        let memory = 0;
+        let heapBase = 2048;
+        let freeList = heapBase;
+        let freeList[0] = 0;
+        let freeList[1] = 14334;
+        let deFragFlag = false;        
+        return;
+    }
+
+    /** Returns the RAM value at the given address. */
+    function int peek(int address) {
+        return memory[address];
+    }
+
+    /** Sets the RAM value at the given address to the given value. */
+    function void poke(int address, int value) {
+        let memory[address] = value;
+        return;
+    }
+
+    /** Finds an available RAM block of the given size and returns
+     *  a reference to its base address. */
+    function Array alloc(int size) {
+        var Array current, previous, next;
+        var int currentSize;
+        let current = freeList;
+        let previous = 0;
+        while (~(current = 0)) {
+            let currentSize = current[1];
+            let next = current[0];
+
+            if (currentSize > (size + 2)) {
+                let current[1] = size;
+                let current[size + 2] = next;
+                let current[size + 3] = currentSize - size - 2;
+
+                if (previous = 0) {
+                    let freeList = current + size + 2;
+                }
+                else {
+                    let memory[previous] = current + size + 2;
+                }
+                return current + 2;
+            }
+            if (currentSize = (size + 2)) {
+                if (previous = 0) {
+                    let freeList = next;
+                }
+                else {
+                    let memory[previous] = next;
+                }
+                return current + 2;
+            }
+            let previous = current;
+            let current = next;
+        }
+        if (~deFragFlag) {
+            do Memory.deFrag();
+            let deFragFlag = true;
+            let current = Memory.alloc(size);
+            return current;
+        }
+        return 0;
+    }
+
+    /** De-allocates the given object (cast as an array) by making
+     *  it available for future allocations. */
+    function void deAlloc(Array o) {
+        var Array headerAddress;
+        var int blockSize;
+        let headerAddress = o - 2;
+        let blockSize = headerAddress[1];
+        let headerAddress[0] = freeList;
+        let freeList = headerAddress;
+        let deFragFlag = false;
+        return;
+    }
+
+    function void deFrag() {
+        var Array sorted, current, next, previous, insert, insertPrevious;
+        var Array expectedNextAddress;
+        var int currentSize, nextSize;
+        let sorted = 0;
+        let current = freeList;
+        while (~(current = 0)) {
+            let next = current[0];
+            let insertPrevious = 0;
+            let insert = sorted;
+            while((~(insert = 0)) & (insert < current)) {
+                let insertPrevious = insert;
+                let insert = insert[0];
+            }
+            if (insertPrevious = 0) {
+                let current[0] = sorted;
+                let sorted = current;
+            }
+            else {
+                let insertPrevious[0] = current;
+                let current[0] = insert;
+            }
+            let current = next;
+        }
+
+        let freeList = sorted;
+        let current = freeList;
+
+        while (~(current = 0)) {
+            let next = current[0];
+            if (~(next = 0)) {
+                let currentSize = current[1];
+                let expectedNextAddress = current + currentSize + 2;
+                if (expectedNextAddress = next) {
+                    let nextSize = next[1];
+                    let currentSize = currentSize + nextSize + 2;
+                    let current[1] = currentSize;
+                    let next = memory[next];
+                    let current[0] = next;
+                }
+                else {
+                    let current = next;
+                }
+            }
+            else {
+                let current = next;
+            }
+        }
+        return;
+    }
+}
